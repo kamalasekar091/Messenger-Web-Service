@@ -1,6 +1,7 @@
 package com.kamalasekar.restful.messenger.resources;
 
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
 import java.util.List;
 import java.util.Map;
@@ -24,5 +25,10 @@ public class MessageResources {
 		return objmessageservice.getAllMessages();
 	}
 
-
+	@GET
+	@Path("/{messageId}")
+	@Produces(MediaType.APPLICATION_XML)
+	public Message getMessage(@PathParam("messageId") long id){
+		return objmessageservice.getMessage(id);
+	}
 }
