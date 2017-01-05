@@ -18,35 +18,31 @@ import com.kamalasekar.restful.messenger.model.Message;
 import com.kamalasekar.restful.messenger.service.MessageService;
 
 @Path("messages")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class MessageResources {
 	
 	
 	MessageService objmessageservice= new MessageService();
 	
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	public List<Message> getMessages() {
 		return objmessageservice.getAllMessages();
 	}
 
 	@GET
 	@Path("/{messageId}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Message getMessage(@PathParam("messageId") long id){
 		return objmessageservice.getMessage(id);
 	}
 	
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Message addMessage(Message message) {
 		return objmessageservice.addMessage(message);
 	}
 	
 	@PUT
 	@Path("/{messageId}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Message updateMessage(@PathParam("messageId") long id, Message message){
 		message.setId(id);
 		return objmessageservice.updateMessage(message);
@@ -54,7 +50,6 @@ public class MessageResources {
 	
 	@DELETE
 	@Path("/{messageId}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public void deleteMessages(@PathParam("messageId") long id){
 		
 		objmessageservice.removeMessage(id);
