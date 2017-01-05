@@ -6,7 +6,9 @@ import javax.ws.rs.PathParam;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -31,4 +33,14 @@ public class MessageResources {
 	public Message getMessage(@PathParam("messageId") long id){
 		return objmessageservice.getMessage(id);
 	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Message addMessage(Message message) {
+		return objmessageservice.addMessage(message);
+	}
+	
+	
+	
 }
