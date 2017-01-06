@@ -12,6 +12,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.kamalasekar.restful.messenger.model.Message;
@@ -26,8 +27,15 @@ public class MessageResources {
 	MessageService objmessageservice= new MessageService();
 	
 	@GET
-	public List<Message> getMessages() {
-		return objmessageservice.getAllMessages();
+	public List<Message> getMessages(@QueryParam("year") int year,@QueryParam("start") int start,@QueryParam("size") int size) {
+		if (year > 0){
+			return objmessageservice.getAllMessagesForYear(year);
+		}else if(start >=0 && size >0){
+			return objmessageservice.getAllMessagesPaginated(start, size);
+		}else {
+			return objmessageservice.getAllMessages();
+		}
+			
 	}
 
 	@GET
