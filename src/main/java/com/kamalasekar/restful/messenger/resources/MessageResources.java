@@ -6,6 +6,7 @@ import javax.ws.rs.PathParam;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,6 +17,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.kamalasekar.restful.messenger.model.Message;
+import com.kamalasekar.restful.messenger.resources.bean.MessageFilterBean;
 import com.kamalasekar.restful.messenger.service.MessageService;
 
 @Path("messages")
@@ -27,11 +29,11 @@ public class MessageResources {
 	MessageService objmessageservice= new MessageService();
 	
 	@GET
-	public List<Message> getMessages(@QueryParam("year") int year,@QueryParam("start") int start,@QueryParam("size") int size) {
-		if (year > 0){
-			return objmessageservice.getAllMessagesForYear(year);
-		}else if(start >=0 && size >0){
-			return objmessageservice.getAllMessagesPaginated(start, size);
+	public List<Message> getMessages(@BeanParam MessageFilterBean filterbean) {
+		if (filterbean.getYear() > 0){
+			return objmessageservice.getAllMessagesForYear(filterbean.getYear());
+		}else if(filterbean.getStart() >=0 && filterbean.getSize() >0){
+			return objmessageservice.getAllMessagesPaginated(filterbean.getStart(), filterbean.getSize());
 		}else {
 			return objmessageservice.getAllMessages();
 		}
