@@ -3,6 +3,7 @@ package com.kamalasekar.restful.messenger.resources;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import com.kamalasekar.restful.messenger.model.Message;
 import com.kamalasekar.restful.messenger.resources.bean.MessageFilterBean;
@@ -47,8 +51,10 @@ public class MessageResources {
 	}
 	
 	@POST
-	public Message addMessage(Message message) {
-		return objmessageservice.addMessage(message);
+	public Response addMessage(@Context UriInfo uriinfo, Message message) {
+		Message returnmesage= objmessageservice.addMessage(message);
+		URI uri=uriinfo.getAbsolutePathBuilder().path(String.valueOf(returnmesage.getId())).build();
+		return Response.created(uri).entity(returnmesage).build();
 	}
 	
 	@PUT
